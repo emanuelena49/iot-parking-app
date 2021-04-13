@@ -5,7 +5,7 @@ import uniud.iot.lab.dataProvider.DistancesProvider;
 /**
  * A generic manager for an UI element that should render the 3 distances
  */
-public interface DistanceDisplay {
+public interface DistancesDisplay {
 
     /**
      * Render the distances

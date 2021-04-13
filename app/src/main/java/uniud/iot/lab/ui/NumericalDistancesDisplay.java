@@ -1,9 +1,7 @@
 package uniud.iot.lab.ui;
 
-import android.view.ViewDebug;
 import android.widget.TextView;
 
-import java.io.ObjectStreamException;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
@@ -14,7 +12,7 @@ import uniud.iot.lab.utils.Activable;
 /**
  * A class used to manage the bottom distances numerical displays.
  */
-public class NumericalDistanceDisplay implements Activable, DistanceDisplay, Observer {
+public class NumericalDistancesDisplay implements Activable, DistancesDisplay, Observer {
 
     // the 3 boxes where I write the distances
     private TextView d1View, d2View, d3View;
@@ -28,7 +26,7 @@ public class NumericalDistanceDisplay implements Activable, DistanceDisplay, Obs
      * @param distanceViews a map which associate the box to the distance name (ex. "right": ...)
      * @param distancesProvider the provider of the distances
      */
-    public NumericalDistanceDisplay(Map<String, TextView> distanceViews, DistancesProvider distancesProvider) {
+    public NumericalDistancesDisplay(Map<String, TextView> distanceViews, DistancesProvider distancesProvider) {
 
         try {
             this.d1View = distanceViews.get("right");
