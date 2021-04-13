@@ -7,7 +7,7 @@ import java.util.Observable;
  */
 public class DistancesProvider extends Observable {
 
-    private Map<String, Integer> distances;
+    private Map<String, Float> distances;
 
     public DistancesProvider() {
         distances = null;
@@ -18,12 +18,12 @@ public class DistancesProvider extends Observable {
      *
      * @return the most recent distances
      */
-    public Map<String, Integer> getDistances() {
+    public Map<String, Float> getDistances() {
 
         return distances;
     }
 
-    public void setDistances(Map<String, Integer> distances) {
+    public void setDistances(Map<String, Float> distances) {
 
         this.distances = distances;
 

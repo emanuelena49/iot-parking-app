@@ -23,7 +23,7 @@ public class TestObserverObservablePattern {
 
         private DistancesProvider distancesProvider;
         private int nUpdates;
-        private Map<String, Integer> lastDistaces;
+        private Map<String, Float> lastDistaces;
 
         public DistancesClient(DistancesProvider provider) {
             this.distancesProvider = provider;
@@ -39,7 +39,7 @@ public class TestObserverObservablePattern {
             lastDistaces = distancesProvider.getDistances();
         }
 
-        public Map<String, Integer> getLastDistaces() {
+        public Map<String, Float> getLastDistaces() {
             return this.lastDistaces;
         }
 
