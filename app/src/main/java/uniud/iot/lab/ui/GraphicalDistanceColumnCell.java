@@ -8,26 +8,28 @@ import android.view.View;
  */
 public class GraphicalDistanceColumnCell {
 
-    private Color colorOn, colorOff, colorError;
+    private int colorOn, colorOff, colorError;
     private View physicalCell;
 
-    GraphicalDistanceColumnCell(View physicalCell, Color colorOn, Color colorOff, Color colorError) {
+    public GraphicalDistanceColumnCell(View physicalCell, int colorOn, int colorOff, int colorError) {
 
         this.physicalCell = physicalCell;
         this.colorOn = colorOn;
         this.colorOff = colorOff;
         this.colorError = colorError;
+
+        setError();
     }
 
     public void setOn() {
-        physicalCell.setBackgroundColor(colorOn.hashCode());
+        physicalCell.setBackgroundColor(colorOn);
     }
 
     public void setOff() {
-        physicalCell.setBackgroundColor(colorOff.hashCode());
+        physicalCell.setBackgroundColor(colorOff);
     }
 
     public void setError() {
-        physicalCell.setBackgroundColor(colorError.hashCode());
+        physicalCell.setBackgroundColor(colorError);
     }
 }

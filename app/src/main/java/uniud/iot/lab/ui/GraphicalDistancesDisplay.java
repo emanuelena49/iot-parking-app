@@ -13,6 +13,7 @@ public class GraphicalDistancesDisplay implements Observer, DistancesDisplay {
     // the provider of the distances
     private DistancesProvider distancesProvider;
 
+    // the 3 columns
     private GraphicalDistancesColumn d1Column, d2Column, d3Column;
 
     /**
@@ -34,6 +35,7 @@ public class GraphicalDistancesDisplay implements Observer, DistancesDisplay {
         }
 
         this.distancesProvider = distancesProvider;
+        distancesProvider.addObserver(this);
     }
 
     @Override
@@ -53,26 +55,24 @@ public class GraphicalDistancesDisplay implements Observer, DistancesDisplay {
     @Override
     public void update(Observable o, Object arg) {
 
-        if(distancesProvider.hasChanged()) {
-            Map<String, Float> distances = distancesProvider.getDistances();
+        Map<String, Float> distances = distancesProvider.getDistances();
 
-            if (distances == null) {
+        if (distances == null) {
 
-                // if I don't have distances I set an error message
+            // if I don't have distances I set an error message
+            setError();
+        } else {
+
+            // if I have them, I render
+            try {
+                renderDistances(
+                        distances.get("right"),
+                        distances.get("center"),
+                        distances.get("left")
+                );
+            } catch(NullPointerException e) {
                 setError();
-            } else {
-
-                // if I have them, I render
-                try {
-                    renderDistances(
-                            distances.get("right"),
-                            distances.get("center"),
-                            distances.get("left")
-                    );
-                } catch(NullPointerException e) {
-                    setError();
-                    // todo: raise something
-                }
+                // todo: raise something
             }
         }
     }

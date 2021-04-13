@@ -24,7 +24,7 @@ public class GraphicalDistancesColumn {
             List<GraphicalDistanceColumnCell> cells,
             Float minDistance, Float maxDistance) {
 
-        if (this.cells.size() != N_CELLS) {
+        if (cells.size() != N_CELLS) {
             // todo: raise something
         }
         this.cells = cells;
