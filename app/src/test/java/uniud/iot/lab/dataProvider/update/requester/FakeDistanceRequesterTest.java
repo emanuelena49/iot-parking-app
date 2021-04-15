@@ -1,14 +1,8 @@
 package uniud.iot.lab.dataProvider.update.requester;
-
-import junit.framework.TestCase;
-
-import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import org.json.JSONObject;
-
 import uniud.iot.lab.dataProvider.update.requester.exceptions.AlreadyUsedDataException;
 
 
@@ -26,8 +20,8 @@ public class FakeDistanceRequesterTest {
         try {
             JSONObject response = this.fakeRequester.response();
             Assert.assertNotEquals(null, response);
-        } catch (AlreadyUsedDataException err){
-            Assert.fail("Exception" + err);
+        } catch (AlreadyUsedDataException exp){
+            Assert.fail("Exception" + exp);
         }
 
     }
@@ -38,8 +32,8 @@ public class FakeDistanceRequesterTest {
         try {
             JSONObject response = this.fakeRequester.response();
             Assert.assertEquals(response.getClass(), JSONObject.class);
-        } catch (AlreadyUsedDataException err){
-            Assert.fail("Exception" + err);
+        } catch (AlreadyUsedDataException exp){
+            Assert.fail("Exception" + exp);
         }
 
     }
