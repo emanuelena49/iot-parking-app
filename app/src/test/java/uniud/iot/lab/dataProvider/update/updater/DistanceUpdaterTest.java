@@ -3,6 +3,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.Timer;
+import java.util.concurrent.TimeUnit;
 
 import uniud.iot.lab.dataProvider.DistancesProvider;
 import uniud.iot.lab.dataProvider.update.requester.FakeDistanceRequester;
@@ -32,7 +33,7 @@ public class DistanceUpdaterTest {
     public void runTest(){
         //Tests if the thread starts.
         try {
-            this.distanceUpdater.run();
+            this.distanceUpdater.startUpdated();
             Assert.assertTrue(this.distanceUpdater.isRunning());
         } catch (UpdaterAlreadyRunningException exp){
             Assert.fail("Exception" + exp);
@@ -43,15 +44,15 @@ public class DistanceUpdaterTest {
 
     @Test(expected = UpdaterAlreadyRunningException.class)
     public void multipleRun() throws UpdaterAlreadyRunningException{
-        this.distanceUpdater.run();
-        this.distanceUpdater.run();
+        this.distanceUpdater.startUpdated();
+        this.distanceUpdater.startUpdated();
     }
 
     @Test
     public void stopTest(){
         try{
-            this.distanceUpdater.run();
-            this.distanceUpdater.stop();
+            this.distanceUpdater.startUpdated();
+            this.distanceUpdater.stopUpdate();
             Assert.assertFalse(this.distanceUpdater.isRunning());
         }
         catch (UpdaterAlreadyRunningException | UpdaterAlreadyStoppedExceptions exp){
@@ -61,9 +62,8 @@ public class DistanceUpdaterTest {
 
     @Test(expected = UpdaterAlreadyStoppedExceptions.class)
     public void multipleStop() throws UpdaterAlreadyStoppedExceptions{
-        this.distanceUpdater.stop();
+        this.distanceUpdater.stopUpdate();
     }
-
 
 
     }

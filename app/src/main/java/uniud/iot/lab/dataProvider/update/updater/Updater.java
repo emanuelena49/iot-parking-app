@@ -4,8 +4,8 @@ import uniud.iot.lab.dataProvider.update.updater.exceptions.UpdaterAlreadyRunnin
 import uniud.iot.lab.dataProvider.update.updater.exceptions.UpdaterAlreadyStoppedExceptions;
 
 public interface Updater {
-    public void run() throws UpdaterAlreadyRunningException;
-    public void stop() throws UpdaterAlreadyStoppedExceptions;
+    public void startUpdated() throws UpdaterAlreadyRunningException;
+    public void stopUpdate() throws UpdaterAlreadyStoppedExceptions;
     public boolean isRunning();
 
 }
