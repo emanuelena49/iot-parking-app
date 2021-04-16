@@ -73,18 +73,32 @@ public class MainActivity extends AppCompatActivity {
         Map<String, GraphicalDistancesColumn> cols =
                 new HashMap<String, GraphicalDistancesColumn>();
 
+        // create colors
+        List<Integer> colors = new ArrayList<Integer>();
+        colors.add(Color.parseColor("#B11414"));
+        colors.add(Color.parseColor("#F3AE47"));
+        colors.add(Color.parseColor("#53D007"));
+
+        int colorOff = Color.LTGRAY;
+        int colorError = Color.parseColor("#B11414");
 
         cols.put("left", buildGraphicalDistanceCol(
                 findViewById(R.id.grahicalDistanceDisplayerLeft),
-                nCells, minDistance, maxDistance));
+                nCells, minDistance, maxDistance, Gravity.RIGHT,
+                colors, colorOff, colorError
+        ));
 
         cols.put("center", buildGraphicalDistanceCol(
                 findViewById(R.id.grahicalDistanceDisplayerCenter),
-                nCells, minDistance, maxDistance));
+                nCells, minDistance, maxDistance, Gravity.CENTER,
+                colors, colorOff, colorError
+        ));
 
         cols.put("right", buildGraphicalDistanceCol(
                 findViewById(R.id.grahicalDistanceDisplayerRight),
-                nCells, minDistance, maxDistance));
+                nCells, minDistance, maxDistance, Gravity.LEFT,
+                colors, colorOff, colorError
+        ));
 
         return new GraphicalDistancesDisplay(cols, distancesProvider);
     }
@@ -99,16 +113,9 @@ public class MainActivity extends AppCompatActivity {
      */
     private GraphicalDistancesColumn buildGraphicalDistanceCol(
             LinearLayout column, int nCells,
-            Float minDistance, Float maxDistance) {
-
-        LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                1.0f
-        );
-
-        param.setMargins(2, 2, 2, 2);
-
+            Float minDistance, Float maxDistance,
+            int gravity, List<Integer> colors,
+            int colorOff, int colorError) {
 
         // list of cell I have to return
         List<GraphicalDistanceColumnCell> cells = new ArrayList<GraphicalDistanceColumnCell>();
@@ -116,14 +123,46 @@ public class MainActivity extends AppCompatActivity {
         for(int i=0; i<nCells; i++) {
             TextView row = new TextView(this);
 
+            // create element style
+            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    1.0f
+            );
+
+            // manage margin (and "pyramid effect")
+            int topBottomMargin = 15;
+
+            int rightMargin = 5;
+            int leftMargin = 5;
+            int k = 30;
+
+            switch (gravity){
+                case Gravity.LEFT:
+                    rightMargin += k*(nCells-i-1);
+                    break;
+                case Gravity.RIGHT:
+                    leftMargin += k*(nCells-i-1);
+                    break;
+                default:
+                    rightMargin += 15;
+                    leftMargin += 15;
+                    break;
+            }
+
+            param.setMargins(leftMargin, topBottomMargin, rightMargin, topBottomMargin);
+
             // set style
             row.setLayoutParams(param);
 
             // add row to UI
             column.addView(row);
 
+            // manage color
+            int color = colors.get(i*colors.size()/nCells);
+
             // create the abstract class which will control it and add it to the cell list
-            cells.add(new GraphicalDistanceColumnCell(row, Color.RED, Color.LTGRAY, Color.RED));
+            cells.add(new GraphicalDistanceColumnCell(row, color, colorOff, colorError));
         }
 
         return new GraphicalDistancesColumn(cells, minDistance, maxDistance);
