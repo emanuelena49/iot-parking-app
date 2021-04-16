@@ -3,6 +3,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import uniud.iot.lab.dataProvider.update.requester.exceptions.AlreadyUsedDataException;
 
 
@@ -18,7 +22,7 @@ public class FakeDistanceRequesterTest {
     public void makeRequestTest(){
         this.fakeRequester.request();
         try {
-            JSONObject response = this.fakeRequester.response();
+            Map<String,Float> response = this.fakeRequester.response();
             Assert.assertNotEquals(null, response);
         } catch (AlreadyUsedDataException exp){
             Assert.fail("Exception" + exp);
@@ -30,8 +34,8 @@ public class FakeDistanceRequesterTest {
     public void checkTypeOfResponseTest(){
         this.fakeRequester.request();
         try {
-            JSONObject response = this.fakeRequester.response();
-            Assert.assertEquals(response.getClass(), JSONObject.class);
+            Map<String,Float> response = this.fakeRequester.response();
+            Assert.assertEquals(response.getClass(), HashMap.class);
         } catch (AlreadyUsedDataException exp){
             Assert.fail("Exception" + exp);
         }
@@ -41,8 +45,8 @@ public class FakeDistanceRequesterTest {
     @Test(expected = AlreadyUsedDataException.class)
     public void useMultipleTimeSameResponseTest() throws Exception{
         this.fakeRequester.request();
-        JSONObject firstResponse = this.fakeRequester.response();
-        JSONObject secondResponse = this.fakeRequester.response();
+        Map<String,Float> firstResponse = this.fakeRequester.response();
+        Map<String,Float> secondResponse = this.fakeRequester.response();
 
     }
 

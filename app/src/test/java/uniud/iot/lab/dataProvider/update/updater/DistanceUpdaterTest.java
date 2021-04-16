@@ -6,6 +6,7 @@ import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
 import uniud.iot.lab.dataProvider.DistancesProvider;
+import uniud.iot.lab.dataProvider.update.requester.DistanceRequester;
 import uniud.iot.lab.dataProvider.update.requester.FakeDistanceRequester;
 import uniud.iot.lab.dataProvider.update.requester.Requester;
 import uniud.iot.lab.dataProvider.update.updater.exceptions.UpdaterAlreadyRunningException;
@@ -13,7 +14,7 @@ import uniud.iot.lab.dataProvider.update.updater.exceptions.UpdaterAlreadyStoppe
 
 
 public class DistanceUpdaterTest {
-    private Requester requester;
+    private DistanceRequester requester;
     private Timer timer;
     private DistancesProvider distancesProvider;
     private Updater distanceUpdater;
@@ -23,7 +24,6 @@ public class DistanceUpdaterTest {
         this.requester = new FakeDistanceRequester("0.0.0.0", 0);
         this.timer = new Timer();
         this.distancesProvider = new DistancesProvider();
-
         this.distanceUpdater = new DistanceUpdater(this.requester, this.timer, this.distancesProvider);
     }
 
@@ -34,14 +34,15 @@ public class DistanceUpdaterTest {
         //Tests if the thread starts.
         try {
             this.distanceUpdater.startUpdated();
+            TimeUnit.SECONDS.sleep(1);
             Assert.assertTrue(this.distanceUpdater.isRunning());
-        } catch (UpdaterAlreadyRunningException exp){
+        } catch (UpdaterAlreadyRunningException | InterruptedException exp){
             Assert.fail("Exception" + exp);
         }
 
 
     }
-
+    
     @Test(expected = UpdaterAlreadyRunningException.class)
     public void multipleRun() throws UpdaterAlreadyRunningException{
         this.distanceUpdater.startUpdated();
