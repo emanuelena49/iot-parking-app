@@ -14,7 +14,9 @@ public class CreateDistanceUpdaterService implements CreateUpdaterService {
 
     @Override
     public Updater createUpdater(Observable dataProvider) {
-        //TODO: import configurations from a config file.
+        // TODO: import configurations from a config file.
+
+        // TODO: configurable update time interval (in ms)
         Requester requester = RequesterFactory.getFakeDistanceRequester("0.0.0.0", 0);
         Timer timer = new Timer();
 

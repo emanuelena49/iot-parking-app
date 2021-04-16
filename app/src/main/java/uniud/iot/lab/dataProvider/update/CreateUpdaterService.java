@@ -11,5 +11,5 @@ public interface CreateUpdaterService {
      * @param dataProvider instance of DataProvider where to place the data updated.
      * @return instance of Updater.
      */
-    public Updater createUpdater(Observable dataProvider);
+    Updater createUpdater(Observable dataProvider);
 }

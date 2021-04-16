@@ -1,26 +1,22 @@
 package uniud.iot.lab;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import uniud.iot.lab.dataProvider.DistancesProvider;
+import uniud.iot.lab.dataProvider.update.CreateDistanceUpdaterService;
+import uniud.iot.lab.dataProvider.update.updater.Updater;
+import uniud.iot.lab.dataProvider.update.updater.exceptions.UpdaterAlreadyRunningException;
 import uniud.iot.lab.ui.GraphicalDistanceColumnCell;
 import uniud.iot.lab.ui.GraphicalDistancesColumn;
 import uniud.iot.lab.ui.GraphicalDistancesDisplay;
@@ -36,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
         // create my distance provider
         DistancesProvider distancesProvider = new DistancesProvider();
 
+        // create an updater for distances
+        Updater distancesUpdater =
+                new CreateDistanceUpdaterService().createUpdater(distancesProvider);
+
         // params of the graphical distance display
         int nCells = 6;
         Float minDistance = 0f;
@@ -49,11 +49,17 @@ public class MainActivity extends AppCompatActivity {
 
         // init sample distances
         Map<String, Float> distances = new HashMap<String, Float>();
-        distances.put("left", 1f);
-        distances.put("center", 200f);
-        distances.put("right", 399f);
+        distances.put("left", 400f);
+        distances.put("center", 350f);
+        distances.put("right", 50f);
 
         distancesProvider.setDistances(distances);
+
+        try {
+            distancesUpdater.startUpdated();
+        } catch (UpdaterAlreadyRunningException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -159,7 +165,8 @@ public class MainActivity extends AppCompatActivity {
             column.addView(row);
 
             // manage color
-            int color = colors.get(i*colors.size()/nCells);
+            int colorIndex = i*colors.size()/nCells;
+            int color = colors.get(colorIndex);
 
             // create the abstract class which will control it and add it to the cell list
             cells.add(new GraphicalDistanceColumnCell(row, color, colorOff, colorError));

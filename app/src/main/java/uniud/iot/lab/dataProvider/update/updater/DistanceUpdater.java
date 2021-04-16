@@ -67,7 +67,7 @@ public class DistanceUpdater extends Thread implements Updater{
             }
             this.distanceProvider.setDistances(response);
             try {
-                TimeUnit.MICROSECONDS.sleep(1);
+                TimeUnit.MILLISECONDS.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

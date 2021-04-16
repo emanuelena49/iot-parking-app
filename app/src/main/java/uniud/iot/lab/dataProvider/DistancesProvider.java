@@ -1,4 +1,8 @@
 package uniud.iot.lab.dataProvider;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+
 import java.util.Map;
 import java.util.Observable;
 
@@ -29,6 +33,24 @@ public class DistancesProvider extends Observable {
 
         // notify everyone
         setChanged();
-        notifyObservers();
+
+        DistancesProvider thisProvider = this;
+
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                thisProvider.notifyObservers();
+            }
+        });
+        /*
+        new Handler(Looper.getMainLooper()){
+            @Override
+            public void handleMessage(Message message) {
+                // This is where you do your work in the UI thread.
+                // Your worker tells you in the message what to do.
+
+
+            }
+        };*/
     }
 }
