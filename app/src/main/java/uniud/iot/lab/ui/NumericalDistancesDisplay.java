@@ -42,20 +42,33 @@ public class NumericalDistancesDisplay implements Activable, DistancesDisplay, O
         activate();
     }
 
+    private static String distanceToString(Float value) {
+
+        // round it and get it as string
+        Integer roundedValue = Math.round(value);
+        String strValue = roundedValue.toString();
+
+        // append missing zeros (ex. "15" -> "015")
+        // to obtain an uniform style
+        for (int i=strValue.length(); i<3; i++) {
+            strValue = "0".concat(strValue);
+        }
+
+        return strValue;
+    }
+
     @Override
     public void renderDistances(Float d1, Float d2, Float d3) {
 
-        String measureUnit = " cm";
-
-        d1View.setText(d1.toString().concat(measureUnit));
-        d2View.setText(d2.toString().concat(measureUnit));
-        d3View.setText(d3.toString().concat(measureUnit));
+        d1View.setText(distanceToString(d1));
+        d2View.setText(distanceToString(d2));
+        d3View.setText(distanceToString(d3));
     }
 
     @Override
     public void setError() {
 
-        String noValue = "--.-- cm";
+        String noValue = "---";
 
         d1View.setText(noValue);
         d2View.setText(noValue);

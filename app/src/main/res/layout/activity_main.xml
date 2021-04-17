@@ -64,7 +64,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="#00BCD4"
-                android:text="C.D. cm" />
+                android:text="---"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/distanceLabelCenter"
@@ -72,7 +75,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="#00BCD4"
-                android:text="C.D. cm" />
+                android:text="---"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/distanceLabelRight"
@@ -80,7 +86,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="#00BCD4"
-                android:text="R.D. cm" />
+                android:text="---"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
     </LinearLayout>
@@ -131,6 +140,7 @@
                 android:id="@+id/controlNumericalDistance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="1234" />
         </TableRow>
 
@@ -142,9 +152,23 @@
                 android:id="@+id/controlAudioAlert"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="Audio" />
         </TableRow>
 
     </TableLayout>
+
+    <TextView
+        android:id="@+id/distancesMeasureUnit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="10dp"
+        android:text="[cm]"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

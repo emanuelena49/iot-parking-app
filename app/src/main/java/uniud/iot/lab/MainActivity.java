@@ -19,6 +19,7 @@ import uniud.iot.lab.dataProvider.DistancesProvider;
 import uniud.iot.lab.dataProvider.update.CreateDistanceUpdaterService;
 import uniud.iot.lab.dataProvider.update.updater.Updater;
 import uniud.iot.lab.dataProvider.update.updater.exceptions.UpdaterAlreadyRunningException;
+import uniud.iot.lab.ui.DistancesAudioAlert;
 import uniud.iot.lab.ui.GraphicalDistanceColumnCell;
 import uniud.iot.lab.ui.GraphicalDistancesColumn;
 import uniud.iot.lab.ui.GraphicalDistancesDisplay;
@@ -49,6 +50,12 @@ public class MainActivity extends AppCompatActivity {
 
         NumericalDistancesDisplay numericalDistancesDisplay =
                 buildNumericalDistanceDisplay(distancesProvider);
+
+        // todo: real audio alert
+        DistancesAudioAlert audioAlert = new DistancesAudioAlert(distancesProvider);
+
+        // init the aside switches
+        manageAsideSwitches(numericalDistancesDisplay, audioAlert);
 
         // run the updater
         try {
@@ -213,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // manage audio alert
         Switch audioAlertSwitch = (Switch) findViewById(R.id.controlAudioAlert);
         audioAlertSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
