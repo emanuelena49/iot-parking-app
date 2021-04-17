@@ -3,7 +3,9 @@ package uniud.iot.lab;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,8 +23,14 @@ import uniud.iot.lab.ui.GraphicalDistanceColumnCell;
 import uniud.iot.lab.ui.GraphicalDistancesColumn;
 import uniud.iot.lab.ui.GraphicalDistancesDisplay;
 import uniud.iot.lab.ui.NumericalDistancesDisplay;
+import uniud.iot.lab.utils.Activable;
 
 public class MainActivity extends AppCompatActivity {
+
+    // params of the graphical distance display
+    int nCells = 6;
+    Float minDistance = 0f;
+    Float maxDistance = 400f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,25 +44,13 @@ public class MainActivity extends AppCompatActivity {
         Updater distancesUpdater =
                 new CreateDistanceUpdaterService().createUpdater(distancesProvider);
 
-        // params of the graphical distance display
-        int nCells = 6;
-        Float minDistance = 0f;
-        Float maxDistance = 400f;
-
         GraphicalDistancesDisplay graphicalDistancesDisplay =
                 buildGraphicalDistanceDisplay(distancesProvider, nCells, minDistance, maxDistance);
 
         NumericalDistancesDisplay numericalDistancesDisplay =
                 buildNumericalDistanceDisplay(distancesProvider);
 
-        // init sample distances
-        Map<String, Float> distances = new HashMap<String, Float>();
-        distances.put("left", 400f);
-        distances.put("center", 350f);
-        distances.put("right", 50f);
-
-        distancesProvider.setDistances(distances);
-
+        // run the updater
         try {
             distancesUpdater.startUpdated();
         } catch (UpdaterAlreadyRunningException e) {
@@ -194,5 +190,40 @@ public class MainActivity extends AppCompatActivity {
 
         // build the object and return
         return new NumericalDistancesDisplay(labels, distancesProvider);
+    }
+
+    /**
+     * Manage numerical distance display and audio alert activating and de-activating then
+     * according to aside switches.
+     *
+     * @param numericalDistanceDisplay
+     * @param audioAlert
+     */
+    private void manageAsideSwitches(Activable numericalDistanceDisplay, Activable audioAlert) {
+
+        // manage numerical distance display
+        Switch numericalDistanceSwitch = (Switch) findViewById(R.id.controlNumericalDistance);
+        numericalDistanceSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    numericalDistanceDisplay.activate();
+                } else {
+                    numericalDistanceDisplay.deactivate();
+                }
+            }
+        });
+
+        Switch audioAlertSwitch = (Switch) findViewById(R.id.controlAudioAlert);
+        audioAlertSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    audioAlert.activate();
+                } else {
+                    audioAlert.deactivate();
+                }
+            }
+        });
+
+
     }
 }

@@ -65,24 +65,26 @@ public class NumericalDistancesDisplay implements Activable, DistancesDisplay, O
     @Override
     public void update(Observable o, Object arg) {
 
-        Map<String, Float> distances = distancesProvider.getDistances();
+        if (this.isActive()) {
+            Map<String, Float> distances = distancesProvider.getDistances();
 
-        if (distances == null) {
+            if (distances == null) {
 
-            // if I don't have distances I set an error message
-            setError();
-        } else {
-
-            // if I have them, I render
-            try {
-                renderDistances(
-                        distances.get("right"),
-                        distances.get("center"),
-                        distances.get("left")
-                );
-            } catch(NullPointerException e) {
+                // if I don't have distances I set an error message
                 setError();
-                // todo: raise something
+            } else {
+
+                // if I have them, I render
+                try {
+                    renderDistances(
+                            distances.get("right"),
+                            distances.get("center"),
+                            distances.get("left")
+                    );
+                } catch(NullPointerException e) {
+                    setError();
+                    // todo: raise something
+                }
             }
         }
     }
@@ -91,13 +93,15 @@ public class NumericalDistancesDisplay implements Activable, DistancesDisplay, O
     private boolean active;
 
     @Override
-    public void activate() {
-        active = true;
-    }
+    public void activate() { active = true; }
 
     @Override
     public void deactivate() {
+
         active = false;
+        d1View.setText("");
+        d2View.setText("");
+        d3View.setText("");
     }
 
     @Override
