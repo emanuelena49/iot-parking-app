@@ -23,6 +23,7 @@ public class FakeDistanceRequester implements DistanceRequester{
     @Override
     public void request(){
         changeData();
+        // this.data = null;
         this.freshData = true;
 
     }

@@ -27,6 +27,8 @@ public class StatusLight implements StatusDisplay, Observer {
 
         // register to statusProvider for updates
         this.statusProvider.addObserver(this);
+
+        this.update(this.statusProvider, null);
     }
     @Override
     public void setEverythingOkayStatus() {

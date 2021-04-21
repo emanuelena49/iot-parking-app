@@ -35,9 +35,10 @@ public class NoConnectionAlertDisplay implements StatusDisplay, Observer {
 
         alertDialogShown = false;
 
-
         // register to status provider
         this.statusProvider.addObserver(this);
+
+        this.update(this.statusProvider, null);
     }
 
 

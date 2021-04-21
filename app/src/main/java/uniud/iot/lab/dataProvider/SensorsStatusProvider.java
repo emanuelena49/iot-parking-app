@@ -64,16 +64,11 @@ public class SensorsStatusProvider extends Observable implements Observer {
         boolean precedentDistState = isDistanceAvailable(),
                 precedentVideoState = isVideoAvailable();
 
-
         // get new video state
-        if (videoProvider.hasChanged()) {
-            videoAvailable = videoProvider.isAvailable();
-        }
+        videoAvailable = videoProvider.isAvailable();
 
         // get new distance state
-        if (distancesProvider.hasChanged()) {
-            distanceAvailable = distancesProvider.isAvailable();
-        }
+        distanceAvailable = distancesProvider.isAvailable();
 
         // if something changed in video/distance availability, I notify my observers
         if (precedentDistState != isDistanceAvailable() || precedentVideoState != isVideoAvailable()) {
