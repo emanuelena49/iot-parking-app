@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Observable;
 
 /**
- *
+ * A provider for the distances read by sensors.
  */
 public class DistancesProvider extends Observable {
 
@@ -31,9 +31,8 @@ public class DistancesProvider extends Observable {
 
         this.distances = distances;
 
-        // notify everyone
+        // notify everyone (with an handler to exist from thread)
         setChanged();
-
         DistancesProvider thisProvider = this;
 
         new Handler(Looper.getMainLooper()).post(new Runnable() {
@@ -42,15 +41,5 @@ public class DistancesProvider extends Observable {
                 thisProvider.notifyObservers();
             }
         });
-        /*
-        new Handler(Looper.getMainLooper()){
-            @Override
-            public void handleMessage(Message message) {
-                // This is where you do your work in the UI thread.
-                // Your worker tells you in the message what to do.
-
-
-            }
-        };*/
     }
 }
