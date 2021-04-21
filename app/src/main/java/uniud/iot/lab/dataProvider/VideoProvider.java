@@ -9,7 +9,7 @@ import java.util.Observable;
 /**
  * A provider for the current video caught by the camera.
  */
-public class VideoProvider extends Observable {
+public class VideoProvider extends Observable implements SensorsDataProvider {
 
     private Bitmap frame;
 
@@ -32,5 +32,14 @@ public class VideoProvider extends Observable {
                 thisProvider.notifyObservers();
             }
         });
+    }
+
+    @Override
+    public boolean isAvailable() {
+        if (getFrame() != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

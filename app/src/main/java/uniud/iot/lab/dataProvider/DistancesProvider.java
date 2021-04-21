@@ -9,7 +9,7 @@ import java.util.Observable;
 /**
  * A provider for the distances read by sensors.
  */
-public class DistancesProvider extends Observable {
+public class DistancesProvider extends Observable implements SensorsDataProvider {
 
     private Map<String, Float> distances;
 
@@ -41,5 +41,15 @@ public class DistancesProvider extends Observable {
                 thisProvider.notifyObservers();
             }
         });
+    }
+
+    @Override
+    public boolean isAvailable() {
+        if (getDistances() != null && getDistances().containsKey("right") &&
+                getDistances().containsKey("center") && getDistances().containsKey("left")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

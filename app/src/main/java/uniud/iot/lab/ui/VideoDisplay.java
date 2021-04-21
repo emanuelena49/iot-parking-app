@@ -15,10 +15,14 @@ public class VideoDisplay implements Observer {
 
     private VideoProvider videoProvider;
     private ImageView display;
-    
-    public VideoDisplay(VideoProvider videoProvider, ImageView display) {
+    private Bitmap errorImage;
+
+    public VideoDisplay(VideoProvider videoProvider, ImageView display, Bitmap errorImage) {
         this.videoProvider = videoProvider;
         this.display = display;
+        this.errorImage = errorImage;
+
+        displayError();
     }
 
     /**
@@ -33,12 +37,19 @@ public class VideoDisplay implements Observer {
     /**
      * Display and error frame (do that if video is no available)
      */
-    public void setError() {
-        // todo: display an error message
+    public void displayError() {
+        display.setImageBitmap(errorImage);
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        // todo: write the update code
+
+        Bitmap frame = videoProvider.getFrame();
+
+        if (frame != null) {
+            displayFrame(frame);
+        } else {
+            displayError();
+        }
     }
 }

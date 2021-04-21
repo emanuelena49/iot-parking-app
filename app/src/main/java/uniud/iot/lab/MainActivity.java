@@ -1,9 +1,12 @@
 package uniud.iot.lab;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -15,7 +18,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.net.ssl.SSLEngineResult;
+
 import uniud.iot.lab.dataProvider.DistancesProvider;
+import uniud.iot.lab.dataProvider.SensorsStatusProvider;
+import uniud.iot.lab.dataProvider.VideoProvider;
 import uniud.iot.lab.dataProvider.update.CreateDistanceUpdaterService;
 import uniud.iot.lab.dataProvider.update.updater.Updater;
 import uniud.iot.lab.dataProvider.update.updater.exceptions.UpdaterAlreadyRunningException;
@@ -23,7 +30,11 @@ import uniud.iot.lab.ui.DistancesAudioAlert;
 import uniud.iot.lab.ui.GraphicalDistanceColumnCell;
 import uniud.iot.lab.ui.GraphicalDistancesColumn;
 import uniud.iot.lab.ui.GraphicalDistancesDisplay;
+import uniud.iot.lab.ui.NoConnectionAlertDisplay;
 import uniud.iot.lab.ui.NumericalDistancesDisplay;
+import uniud.iot.lab.ui.StatusDisplay;
+import uniud.iot.lab.ui.StatusLight;
+import uniud.iot.lab.ui.VideoDisplay;
 import uniud.iot.lab.utils.Activable;
 
 public class MainActivity extends AppCompatActivity {
@@ -54,10 +65,23 @@ public class MainActivity extends AppCompatActivity {
         // todo: real audio alert
         DistancesAudioAlert audioAlert = new DistancesAudioAlert(distancesProvider);
 
+        // init video provider
+        VideoProvider videoProvider = new VideoProvider();
+
+        // init video display
+        VideoDisplay videoDisplay = initVideoDisplay(videoProvider);
+
+        // init status provider
+        SensorsStatusProvider statusProvider = new SensorsStatusProvider(distancesProvider, videoProvider);
+
+        // init status display tools
+        StatusDisplay statusIcon = initStatusLight(statusProvider);
+        StatusDisplay noConnectionAlert = initNoConnectionAlert(statusProvider);
+
         // init the aside switches
         manageAsideSwitches(numericalDistancesDisplay, audioAlert);
 
-        // run the updater
+        // run the distance updater
         try {
             distancesUpdater.startUpdated();
         } catch (UpdaterAlreadyRunningException e) {
@@ -231,7 +255,42 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
+    private VideoDisplay initVideoDisplay(VideoProvider provider) {
 
+        ImageView videoDisplayImageView = (ImageView) findViewById(R.id.videoDisplay);
+
+        Bitmap errorImage = BitmapFactory.decodeResource(
+                getApplicationContext().getResources(),
+                R.drawable.camera_not_available
+        );
+
+        return new VideoDisplay(provider, videoDisplayImageView, errorImage);
+    }
+
+    private StatusDisplay initStatusLight(SensorsStatusProvider statusProvider) {
+
+        // define colors
+        int red = Color.parseColor("#B11414");
+        int yellow = Color.parseColor("#F3AE47");
+        int green = Color.parseColor("#53D007");
+
+        // get text view used as light
+        TextView statusIcon = (TextView) findViewById(R.id.statusIcon);
+
+        return new StatusLight(statusProvider, statusIcon, green, yellow, red);
+    }
+
+    private StatusDisplay initNoConnectionAlert(SensorsStatusProvider statusProvider) {
+
+        // prepare alert messages
+        String message = "Something is not working, check if you are connected to sensors network",
+                title = "Something is not working";
+
+        // init alert manager
+        return new NoConnectionAlertDisplay(
+                statusProvider, this, getApplicationContext(),
+                title, message);
     }
 }
