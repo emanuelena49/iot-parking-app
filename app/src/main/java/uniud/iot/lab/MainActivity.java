@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +22,7 @@ import java.util.Map;
 
 import javax.net.ssl.SSLEngineResult;
 
+import uniud.iot.lab.dataProvider.BitmapConverter;
 import uniud.iot.lab.dataProvider.DistancesProvider;
 import uniud.iot.lab.dataProvider.SensorsStatusProvider;
 import uniud.iot.lab.dataProvider.VideoProvider;
@@ -80,6 +83,20 @@ public class MainActivity extends AppCompatActivity {
 
         // init the aside switches
         manageAsideSwitches(numericalDistancesDisplay, audioAlert);
+
+        // todo: remove
+        // test display of raw bytearray image
+        byte[] data = null;
+        try {
+            InputStream inputStream = getApplicationContext().getResources().openRawResource(R.raw.prova160x120bin);
+            data = new byte[inputStream.available()];
+            inputStream.read(data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Bitmap image = new BitmapConverter(160, 120, "RGB_565").getBitmapImage(data);
+        videoDisplay.displayFrame(image);
 
         // run the distance updater
         try {

@@ -33,6 +33,7 @@ public class BitmapConverter {
 
         Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
         ByteBuffer buffer = ByteBuffer.wrap(rawImage);
+        buffer.rewind();
         bmp.copyPixelsFromBuffer(buffer);
 
         return bmp;
