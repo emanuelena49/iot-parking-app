@@ -20,15 +20,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.net.ssl.SSLEngineResult;
-
-import uniud.iot.lab.dataProvider.BitmapConverter;
+import uniud.iot.lab.dataProvider.update.video.BitmapConverter;
 import uniud.iot.lab.dataProvider.DistancesProvider;
 import uniud.iot.lab.dataProvider.SensorsStatusProvider;
 import uniud.iot.lab.dataProvider.VideoProvider;
 import uniud.iot.lab.dataProvider.update.CreateDistanceUpdaterService;
-import uniud.iot.lab.dataProvider.update.updater.Updater;
-import uniud.iot.lab.dataProvider.update.updater.exceptions.UpdaterAlreadyRunningException;
+import uniud.iot.lab.dataProvider.update.Updater;
+import uniud.iot.lab.dataProvider.update.exceptions.UpdaterAlreadyRunningException;
 import uniud.iot.lab.ui.DistancesAudioAlert;
 import uniud.iot.lab.ui.GraphicalDistanceColumnCell;
 import uniud.iot.lab.ui.GraphicalDistancesColumn;
@@ -100,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
         // run the distance updater
         try {
-            distancesUpdater.startUpdated();
+            distancesUpdater.startUpdate();
         } catch (UpdaterAlreadyRunningException e) {
             e.printStackTrace();
         }

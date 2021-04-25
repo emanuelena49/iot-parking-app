@@ -1,4 +1,4 @@
-package uniud.iot.lab.dataProvider.update.requester;
+package uniud.iot.lab.dataProvider.update;
 
 public interface Requester {
     /**

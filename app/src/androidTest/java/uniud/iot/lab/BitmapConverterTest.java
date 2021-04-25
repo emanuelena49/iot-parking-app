@@ -3,7 +3,6 @@ package uniud.iot.lab;
 import android.content.Context;
 import android.graphics.Bitmap;
 
-import androidx.print.PrintHelper;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
@@ -14,7 +13,7 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 import java.io.InputStream;
 
-import uniud.iot.lab.dataProvider.BitmapConverter;
+import uniud.iot.lab.dataProvider.update.video.BitmapConverter;
 
 import static org.junit.Assert.assertEquals;
 

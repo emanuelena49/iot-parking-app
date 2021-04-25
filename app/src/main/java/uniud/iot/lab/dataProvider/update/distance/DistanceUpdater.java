@@ -31,7 +31,7 @@ public class DistanceUpdater extends Thread implements Updater{
 
 
     @Override
-    public void startUpdated() throws UpdaterAlreadyRunningException {
+    public void startUpdate() throws UpdaterAlreadyRunningException {
         if (!this.isRunning) {
             this.isRunning = true;
             start();

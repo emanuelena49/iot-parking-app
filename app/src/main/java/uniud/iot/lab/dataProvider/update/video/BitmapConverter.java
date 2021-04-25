@@ -1,4 +1,4 @@
-package uniud.iot.lab.dataProvider;
+package uniud.iot.lab.dataProvider.update.video;
 
 import android.graphics.Bitmap;
 import android.icu.text.BidiRun;
@@ -7,7 +7,9 @@ import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 
 /**
- * A tool to parse a Bitmap image from a raw bit stream
+ * A tool to parse a Bitmap image from a raw bit array. You initialize it
+ * with expected width, height and format, then you use getBitmapImage() method
+ * to decode raw bytes.
  */
 public class BitmapConverter {
 

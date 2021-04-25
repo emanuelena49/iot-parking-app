@@ -2,12 +2,12 @@ package uniud.iot.lab.dataProvider.update.requester;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import uniud.iot.lab.dataProvider.update.requester.exceptions.AlreadyUsedDataException;
+import uniud.iot.lab.dataProvider.update.distance.FakeDistanceRequester;
+import uniud.iot.lab.dataProvider.update.exceptions.AlreadyUsedDataException;
 
 
 public class FakeDistanceRequesterTest {

@@ -6,11 +6,12 @@ import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
 import uniud.iot.lab.dataProvider.DistancesProvider;
-import uniud.iot.lab.dataProvider.update.requester.DistanceRequester;
-import uniud.iot.lab.dataProvider.update.requester.FakeDistanceRequester;
-import uniud.iot.lab.dataProvider.update.requester.Requester;
-import uniud.iot.lab.dataProvider.update.updater.exceptions.UpdaterAlreadyRunningException;
-import uniud.iot.lab.dataProvider.update.updater.exceptions.UpdaterAlreadyStoppedExceptions;
+import uniud.iot.lab.dataProvider.update.Updater;
+import uniud.iot.lab.dataProvider.update.distance.DistanceUpdater;
+import uniud.iot.lab.dataProvider.update.distance.DistanceRequester;
+import uniud.iot.lab.dataProvider.update.distance.FakeDistanceRequester;
+import uniud.iot.lab.dataProvider.update.exceptions.UpdaterAlreadyRunningException;
+import uniud.iot.lab.dataProvider.update.exceptions.UpdaterAlreadyStoppedExceptions;
 
 
 public class DistanceUpdaterTest {
@@ -33,7 +34,7 @@ public class DistanceUpdaterTest {
     public void runTest(){
         //Tests if the thread starts.
         try {
-            this.distanceUpdater.startUpdated();
+            this.distanceUpdater.startUpdate();
             TimeUnit.SECONDS.sleep(1);
             Assert.assertTrue(this.distanceUpdater.isRunning());
         } catch (UpdaterAlreadyRunningException | InterruptedException exp){
@@ -45,14 +46,14 @@ public class DistanceUpdaterTest {
     
     @Test(expected = UpdaterAlreadyRunningException.class)
     public void multipleRun() throws UpdaterAlreadyRunningException{
-        this.distanceUpdater.startUpdated();
-        this.distanceUpdater.startUpdated();
+        this.distanceUpdater.startUpdate();
+        this.distanceUpdater.startUpdate();
     }
 
     @Test
     public void stopTest(){
         try{
-            this.distanceUpdater.startUpdated();
+            this.distanceUpdater.startUpdate();
             this.distanceUpdater.stopUpdate();
             Assert.assertFalse(this.distanceUpdater.isRunning());
         }

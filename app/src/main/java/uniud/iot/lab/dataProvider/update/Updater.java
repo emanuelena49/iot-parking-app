@@ -1,14 +1,14 @@
-package uniud.iot.lab.dataProvider.update.updater;
+package uniud.iot.lab.dataProvider.update;
 
-import uniud.iot.lab.dataProvider.update.updater.exceptions.UpdaterAlreadyRunningException;
-import uniud.iot.lab.dataProvider.update.updater.exceptions.UpdaterAlreadyStoppedExceptions;
+import uniud.iot.lab.dataProvider.update.exceptions.UpdaterAlreadyRunningException;
+import uniud.iot.lab.dataProvider.update.exceptions.UpdaterAlreadyStoppedExceptions;
 
 public interface Updater {
     /**
      * Starts a Thread that make the update.
      * @throws UpdaterAlreadyRunningException If the Thread is already running.
      */
-    public void startUpdated() throws UpdaterAlreadyRunningException;
+    public void startUpdate() throws UpdaterAlreadyRunningException;
 
     /**
      * Stops the Thread that make the update.

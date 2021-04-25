@@ -1,5 +1,8 @@
-package uniud.iot.lab.dataProvider.update.requester;
+package uniud.iot.lab.dataProvider.update;
 
+
+import uniud.iot.lab.dataProvider.update.Requester;
+import uniud.iot.lab.dataProvider.update.distance.FakeDistanceRequester;
 
 public class RequesterFactory {
     /**
