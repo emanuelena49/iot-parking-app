@@ -27,15 +27,15 @@ import uniud.iot.lab.dataProvider.VideoProvider;
 import uniud.iot.lab.dataProvider.update.CreateDistanceUpdaterService;
 import uniud.iot.lab.dataProvider.update.Updater;
 import uniud.iot.lab.dataProvider.update.exceptions.UpdaterAlreadyRunningException;
-import uniud.iot.lab.ui.DistancesAudioAlert;
-import uniud.iot.lab.ui.GraphicalDistanceColumnCell;
-import uniud.iot.lab.ui.GraphicalDistancesColumn;
-import uniud.iot.lab.ui.GraphicalDistancesDisplay;
-import uniud.iot.lab.ui.NoConnectionAlertDisplay;
-import uniud.iot.lab.ui.NumericalDistancesDisplay;
-import uniud.iot.lab.ui.StatusDisplay;
-import uniud.iot.lab.ui.StatusLight;
-import uniud.iot.lab.ui.VideoDisplay;
+import uniud.iot.lab.ui.distance.DistancesAudioAlert;
+import uniud.iot.lab.ui.distance.GraphicalDistanceColumnCell;
+import uniud.iot.lab.ui.distance.GraphicalDistancesColumn;
+import uniud.iot.lab.ui.distance.GraphicalDistancesDisplay;
+import uniud.iot.lab.ui.status.NoConnectionAlertDisplay;
+import uniud.iot.lab.ui.distance.NumericalDistancesDisplay;
+import uniud.iot.lab.ui.status.StatusDisplay;
+import uniud.iot.lab.ui.status.StatusLight;
+import uniud.iot.lab.ui.video.VideoDisplay;
 import uniud.iot.lab.utils.Activable;
 
 public class MainActivity extends AppCompatActivity {

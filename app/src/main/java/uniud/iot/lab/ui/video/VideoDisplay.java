@@ -1,4 +1,4 @@
-package uniud.iot.lab.ui;
+package uniud.iot.lab.ui.video;
 
 import android.graphics.Bitmap;
 import android.widget.ImageView;

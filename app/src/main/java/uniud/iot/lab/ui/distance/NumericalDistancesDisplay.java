@@ -1,4 +1,4 @@
-package uniud.iot.lab.ui;
+package uniud.iot.lab.ui.distance;
 
 import android.widget.TextView;
 

@@ -1,4 +1,4 @@
-package uniud.iot.lab.ui;
+package uniud.iot.lab.ui.status;
 
 import android.widget.TextView;
 

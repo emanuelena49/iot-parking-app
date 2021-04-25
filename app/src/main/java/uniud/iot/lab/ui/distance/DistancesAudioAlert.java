@@ -1,4 +1,4 @@
-package uniud.iot.lab.ui;
+package uniud.iot.lab.ui.distance;
 
 import java.util.Observable;
 import java.util.Observer;

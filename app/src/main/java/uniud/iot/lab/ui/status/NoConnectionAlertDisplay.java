@@ -1,4 +1,4 @@
-package uniud.iot.lab.ui;
+package uniud.iot.lab.ui.status;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -9,6 +9,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import uniud.iot.lab.dataProvider.SensorsStatusProvider;
+import uniud.iot.lab.ui.status.StatusDisplay;
 
 public class NoConnectionAlertDisplay implements StatusDisplay, Observer {
 

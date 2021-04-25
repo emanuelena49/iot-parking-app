@@ -1,6 +1,4 @@
-package uniud.iot.lab.ui;
-
-import android.widget.TextView;
+package uniud.iot.lab.ui.distance;
 
 import java.util.Map;
 import java.util.Observable;
