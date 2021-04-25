@@ -1,4 +1,4 @@
-package uniud.iot.lab.dataProvider.update.requester.exceptions;
+package uniud.iot.lab.dataProvider.update.exceptions;
 
 public class AlreadyUsedDataException extends Exception{
     public AlreadyUsedDataException(){

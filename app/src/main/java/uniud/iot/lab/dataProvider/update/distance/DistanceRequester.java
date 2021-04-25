@@ -1,8 +1,9 @@
-package uniud.iot.lab.dataProvider.update.requester;
+package uniud.iot.lab.dataProvider.update.distance;
 
 import java.util.Map;
 
-import uniud.iot.lab.dataProvider.update.requester.exceptions.AlreadyUsedDataException;
+import uniud.iot.lab.dataProvider.update.Requester;
+import uniud.iot.lab.dataProvider.update.exceptions.AlreadyUsedDataException;
 
 public interface DistanceRequester extends Requester {
     /**

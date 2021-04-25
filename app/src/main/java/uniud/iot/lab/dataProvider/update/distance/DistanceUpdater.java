@@ -1,21 +1,16 @@
-package uniud.iot.lab.dataProvider.update.updater;
+package uniud.iot.lab.dataProvider.update.distance;
 
-import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
 import uniud.iot.lab.dataProvider.DistancesProvider;
-import uniud.iot.lab.dataProvider.update.requester.DistanceRequester;
-import uniud.iot.lab.dataProvider.update.requester.FakeDistanceRequester;
-import uniud.iot.lab.dataProvider.update.requester.Requester;
-import uniud.iot.lab.dataProvider.update.requester.exceptions.AlreadyUsedDataException;
-import uniud.iot.lab.dataProvider.update.updater.exceptions.UpdaterAlreadyRunningException;
-import uniud.iot.lab.dataProvider.update.updater.exceptions.UpdaterAlreadyStoppedExceptions;
+import uniud.iot.lab.dataProvider.update.exceptions.AlreadyUsedDataException;
+import uniud.iot.lab.dataProvider.update.exceptions.UpdaterAlreadyRunningException;
+import uniud.iot.lab.dataProvider.update.exceptions.UpdaterAlreadyStoppedExceptions;
+import uniud.iot.lab.dataProvider.update.Updater;
 
-public class DistanceUpdater extends Thread implements Updater{
+public class DistanceUpdater extends Thread implements Updater {
 
     private DistanceRequester requester;
     private Timer timer;

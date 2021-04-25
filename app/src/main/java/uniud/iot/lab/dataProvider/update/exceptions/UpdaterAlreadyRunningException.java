@@ -1,4 +1,4 @@
-package uniud.iot.lab.dataProvider.update.updater.exceptions;
+package uniud.iot.lab.dataProvider.update.exceptions;
 
 public class UpdaterAlreadyRunningException extends Exception{
 

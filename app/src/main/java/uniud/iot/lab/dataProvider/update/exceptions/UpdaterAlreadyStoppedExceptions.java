@@ -1,6 +1,4 @@
-package uniud.iot.lab.dataProvider.update.updater.exceptions;
-
-import uniud.iot.lab.dataProvider.update.updater.Updater;
+package uniud.iot.lab.dataProvider.update.exceptions;
 
 public class UpdaterAlreadyStoppedExceptions extends Exception{
     public UpdaterAlreadyStoppedExceptions(){

@@ -1,11 +1,9 @@
-package uniud.iot.lab.dataProvider.update.requester;
-import org.json.JSONException;
-import org.json.JSONObject;
+package uniud.iot.lab.dataProvider.update.distance;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import uniud.iot.lab.dataProvider.update.requester.exceptions.AlreadyUsedDataException;
+import uniud.iot.lab.dataProvider.update.exceptions.AlreadyUsedDataException;
 
 
 public class FakeDistanceRequester implements DistanceRequester{
