@@ -20,6 +20,7 @@ public class VideoUpdater implements Updater {
      */
     public VideoUpdater(VideoProvider providerToKeepUpdated) {
         this.providerToKeepUpdated = providerToKeepUpdated;
+        fluxListener = new VideoFluxListener(providerToKeepUpdated);
     }
 
     @Override
@@ -27,9 +28,8 @@ public class VideoUpdater implements Updater {
 
         // init a video flux listener and start the process
         // todo: do all that async
-        VideoConnectionInitializer initializer = new VideoConnectionInitializer();
-        fluxListener = initializer.initConnection();
-        fluxListener.startListening(providerToKeepUpdated);
+
+        fluxListener.startListening();
     }
 
     @Override
@@ -39,6 +39,6 @@ public class VideoUpdater implements Updater {
 
     @Override
     public boolean isRunning() {
-        return fluxListener.isListening();
+        return fluxListener.isRunning();
     }
 }
