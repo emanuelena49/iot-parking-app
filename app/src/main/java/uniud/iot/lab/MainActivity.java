@@ -13,26 +13,24 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import uniud.iot.lab.dataProvider.update.video.BitmapConverter;
 import uniud.iot.lab.dataProvider.DistancesProvider;
 import uniud.iot.lab.dataProvider.SensorsStatusProvider;
 import uniud.iot.lab.dataProvider.VideoProvider;
-import uniud.iot.lab.dataProvider.update.CreateDistanceUpdaterService;
 import uniud.iot.lab.dataProvider.update.Updater;
+import uniud.iot.lab.dataProvider.update.distance.CreateDistanceUpdaterService;
 import uniud.iot.lab.dataProvider.update.exceptions.UpdaterAlreadyRunningException;
+import uniud.iot.lab.dataProvider.update.video.CreateVideoUpdaterService;
 import uniud.iot.lab.ui.distance.DistancesAudioAlert;
 import uniud.iot.lab.ui.distance.GraphicalDistanceColumnCell;
 import uniud.iot.lab.ui.distance.GraphicalDistancesColumn;
 import uniud.iot.lab.ui.distance.GraphicalDistancesDisplay;
-import uniud.iot.lab.ui.status.NoConnectionAlertDisplay;
 import uniud.iot.lab.ui.distance.NumericalDistancesDisplay;
+import uniud.iot.lab.ui.status.NoConnectionAlertDisplay;
 import uniud.iot.lab.ui.status.StatusDisplay;
 import uniud.iot.lab.ui.status.StatusLight;
 import uniud.iot.lab.ui.video.VideoDisplay;
@@ -50,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // ---------------------------------------------------------------------------------
+        // init distances
+
         // create my distance provider
         DistancesProvider distancesProvider = new DistancesProvider();
 
@@ -66,11 +67,19 @@ public class MainActivity extends AppCompatActivity {
         // todo: real audio alert
         DistancesAudioAlert audioAlert = new DistancesAudioAlert(distancesProvider);
 
+        // ---------------------------------------------------------------------------------
+        // init video
+
         // init video provider
         VideoProvider videoProvider = new VideoProvider();
 
         // init video display
         VideoDisplay videoDisplay = initVideoDisplay(videoProvider);
+
+        Updater videoUpdater = new CreateVideoUpdaterService(getApplicationContext()).createUpdater(videoProvider);
+
+        // ---------------------------------------------------------------------------------
+        // init status
 
         // init status provider
         SensorsStatusProvider statusProvider = new SensorsStatusProvider(distancesProvider, videoProvider);
@@ -82,23 +91,13 @@ public class MainActivity extends AppCompatActivity {
         // init the aside switches
         manageAsideSwitches(numericalDistancesDisplay, audioAlert);
 
-        // todo: remove
-        // test display of raw bytearray image
-        byte[] data = null;
-        try {
-            InputStream inputStream = getApplicationContext().getResources().openRawResource(R.raw.prova160x120bin);
-            data = new byte[inputStream.available()];
-            inputStream.read(data);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Bitmap image = new BitmapConverter(160, 120, "RGB_565").getBitmapImage(data);
-        videoDisplay.displayFrame(image);
+        // ---------------------------------------------------------------------------------
+        // run various update processes
 
         // run the distance updater
         try {
             distancesUpdater.startUpdate();
+            videoUpdater.startUpdate();
         } catch (UpdaterAlreadyRunningException e) {
             e.printStackTrace();
         }

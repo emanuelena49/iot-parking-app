@@ -1,26 +1,23 @@
 package uniud.iot.lab.dataProvider.update.video;
 
-import uniud.iot.lab.dataProvider.VideoProvider;
+import uniud.iot.lab.dataProvider.update.Updater;
 import uniud.iot.lab.dataProvider.update.exceptions.UpdaterAlreadyRunningException;
 import uniud.iot.lab.dataProvider.update.exceptions.UpdaterAlreadyStoppedExceptions;
-import uniud.iot.lab.dataProvider.update.Updater;
 
 /**
  * A tool to ensure {@link uniud.iot.lab.dataProvider.VideoProvider} is always updated
  * with the last video frame from the sensors camera.
  */
-public class VideoUpdater implements Updater {
+public class VideoUpdater extends Thread implements Updater {
 
-    private VideoProvider providerToKeepUpdated;
     private VideoFluxListener fluxListener;
 
     /**
      *
      * @param providerToKeepUpdated the provider I want to keep updated
      */
-    public VideoUpdater(VideoProvider providerToKeepUpdated) {
-        this.providerToKeepUpdated = providerToKeepUpdated;
-        fluxListener = new VideoFluxListener(providerToKeepUpdated);
+    public VideoUpdater(VideoFluxListener fluxListener) {
+        this.fluxListener = fluxListener;
     }
 
     @Override
@@ -29,16 +26,28 @@ public class VideoUpdater implements Updater {
         // init a video flux listener and start the process
         // todo: do all that async
 
-        fluxListener.startListening();
+        if (fluxListener.isRunning()) {
+            throw new UpdaterAlreadyRunningException("The Video update process is already running");
+        }
+        start();
     }
 
     @Override
     public void stopUpdate() throws UpdaterAlreadyStoppedExceptions {
+
+        if (!fluxListener.isRunning()) {
+            throw new UpdaterAlreadyStoppedExceptions("The Video update process is already stopped");
+        }
         fluxListener.closeConnection();
     }
 
     @Override
     public boolean isRunning() {
         return fluxListener.isRunning();
+    }
+
+    @Override
+    public void run() {
+        fluxListener.startListening();
     }
 }

@@ -1,11 +1,13 @@
-package uniud.iot.lab.dataProvider.update;
+package uniud.iot.lab.dataProvider.update.distance;
 
 import java.util.Observable;
 import java.util.Timer;
 
 import uniud.iot.lab.dataProvider.DistancesProvider;
-import uniud.iot.lab.dataProvider.update.distance.DistanceRequester;
-import uniud.iot.lab.dataProvider.update.distance.DistanceUpdater;
+import uniud.iot.lab.dataProvider.update.CreateUpdaterService;
+import uniud.iot.lab.dataProvider.update.Requester;
+import uniud.iot.lab.dataProvider.update.RequesterFactory;
+import uniud.iot.lab.dataProvider.update.Updater;
 
 public class CreateDistanceUpdaterService implements CreateUpdaterService {
 
