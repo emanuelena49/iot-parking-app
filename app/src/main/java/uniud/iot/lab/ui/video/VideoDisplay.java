@@ -22,6 +22,8 @@ public class VideoDisplay implements Observer {
         this.display = display;
         this.errorImage = errorImage;
 
+        videoProvider.addObserver(this);
+
         displayError();
     }
 

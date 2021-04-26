@@ -12,10 +12,6 @@ public class VideoUpdater extends Thread implements Updater {
 
     private VideoFluxListener fluxListener;
 
-    /**
-     *
-     * @param providerToKeepUpdated the provider I want to keep updated
-     */
     public VideoUpdater(VideoFluxListener fluxListener) {
         this.fluxListener = fluxListener;
     }
