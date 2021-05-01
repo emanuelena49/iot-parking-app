@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 
 import uniud.iot.lab.R;
 import uniud.iot.lab.dataProvider.VideoProvider;
@@ -17,7 +18,7 @@ public class FakeVideoFluxListener implements VideoFluxListener {
     private BitmapConverter bitmapConverter;
     private VideoProvider provider;
 
-    public FakeVideoFluxListener(VideoProvider provider, Context applicationContext) {
+    public FakeVideoFluxListener(VideoProvider provider, Context applicationContext, URI uri) {
         isRunning = false;
         this.applicationContext = applicationContext;
         this.provider = provider;

@@ -8,7 +8,6 @@ import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONObject;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 
 import uniud.iot.lab.dataProvider.VideoProvider;
 
@@ -24,11 +23,13 @@ public class ConcreteVideoFluxListener implements VideoFluxListener {
     private WebSocketClient client;
     private boolean initDone;
     private boolean isRunning;
+    private URI uri;
 
-    public ConcreteVideoFluxListener(VideoProvider providerToUpdate) {
+    public ConcreteVideoFluxListener(VideoProvider providerToUpdate, URI uri) {
 
         this.providerToUpdate = providerToUpdate;
         isRunning = false;
+        this.uri = uri;
     }
 
     /**
@@ -36,14 +37,6 @@ public class ConcreteVideoFluxListener implements VideoFluxListener {
      */
     @Override
     public void startListening() {
-
-        URI uri;
-        try {
-            uri = new URI("ws://192.168.1.135:5000/");
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            return;
-        }
 
         ConcreteVideoFluxListener thisFluxListener = this;
         initDone = false;

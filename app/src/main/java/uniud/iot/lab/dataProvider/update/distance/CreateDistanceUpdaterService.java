@@ -1,24 +1,31 @@
 package uniud.iot.lab.dataProvider.update.distance;
 
-import java.util.Observable;
+import java.net.URI;
+import java.util.Map;
 import java.util.Timer;
 
 import uniud.iot.lab.dataProvider.DistancesProvider;
+import uniud.iot.lab.dataProvider.SensorsDataProvider;
 import uniud.iot.lab.dataProvider.update.CreateUpdaterService;
 import uniud.iot.lab.dataProvider.update.Requester;
-import uniud.iot.lab.dataProvider.update.RequesterFactory;
 import uniud.iot.lab.dataProvider.update.Updater;
 
 public class CreateDistanceUpdaterService implements CreateUpdaterService {
 
     @Override
-    public Updater createUpdater(Observable dataProvider) {
-        // TODO: import configurations from a config file.
+    public Updater createUpdater(SensorsDataProvider dataProvider) {
 
-        // TODO: configurable update time interval (in ms)
-        Requester requester = RequesterFactory.getFakeDistanceRequester("0.0.0.0", 0);
+        DistancesProvider finalDataProvider = (DistancesProvider) dataProvider;
+        DistanceResponseHandler responseHandler = new DistanceResponseHandler() {
+            @Override
+            public void handleResponse(Map<String, Float> response) {
+
+                finalDataProvider.setDistances(response);
+            }
+        };
+
+        Requester requester = new FakeDistanceRequester(URI.create("ws://0.0.0.0:5000"), responseHandler);
         Timer timer = new Timer();
-
-        return new DistanceUpdater((DistanceRequester) requester, timer, (DistancesProvider) dataProvider);
+        return new DistanceUpdater((DistanceRequester) requester, timer, finalDataProvider);
     }
 }

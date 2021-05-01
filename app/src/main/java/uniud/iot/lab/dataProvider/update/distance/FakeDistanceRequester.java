@@ -1,21 +1,23 @@
 package uniud.iot.lab.dataProvider.update.distance;
 
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
-import uniud.iot.lab.dataProvider.update.exceptions.AlreadyUsedDataException;
-
 
 public class FakeDistanceRequester implements DistanceRequester{
+
+    private URI uri;
     private String address = null;
     private Integer port = null;
     private Map<String, Float> data = null;
     private boolean freshData = false;
+    DistanceResponseHandler responseHandler;
 
+    public FakeDistanceRequester(URI uri, DistanceResponseHandler responseHandler) {
 
-    public FakeDistanceRequester(String address, Integer port){
-        this.address = address;
-        this.port = port;
+        this.uri = uri;
+        this.responseHandler = responseHandler;
     }
 
     @Override
@@ -23,10 +25,11 @@ public class FakeDistanceRequester implements DistanceRequester{
         changeData();
         // this.data = null;
         this.freshData = true;
-
+        responseHandler.handleResponse(data);
     }
 
 
+    /*
     public Map<String, Float> response() throws AlreadyUsedDataException {
         if (this.freshData) {
             this.freshData = false;
@@ -35,7 +38,7 @@ public class FakeDistanceRequester implements DistanceRequester{
             throw new AlreadyUsedDataException();
         }
 
-    }
+    }*/
 
     private void changeData(){
 
