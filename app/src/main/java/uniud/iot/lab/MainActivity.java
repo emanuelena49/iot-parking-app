@@ -258,6 +258,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*
         // manage audio alert
         Switch audioAlertSwitch = (Switch) findViewById(R.id.controlAudioAlert);
         audioAlertSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -268,8 +269,9 @@ public class MainActivity extends AppCompatActivity {
                     audioAlert.deactivate();
                 }
             }
-        });
+        });*/
     }
+
 
     private VideoDisplay initVideoDisplay(VideoProvider provider) {
 
