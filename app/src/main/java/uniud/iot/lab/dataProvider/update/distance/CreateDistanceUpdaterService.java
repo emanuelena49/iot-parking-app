@@ -24,8 +24,10 @@ public class CreateDistanceUpdaterService implements CreateUpdaterService {
             }
         };
 
-        Requester requester = new FakeDistanceRequester(URI.create("ws://0.0.0.0:5000"), responseHandler);
-        Timer timer = new Timer();
+        //Requester requester = new FakeDistanceRequester(URI.create("ws://0.0.0.0:5000"), responseHandler);
+        Requester requester = new RealDistanceRequester(URI.create("ws://192.168.4.1:6000"), responseHandler);
+                Timer timer = new Timer();
+
         return new DistanceUpdater((DistanceRequester) requester, timer, finalDataProvider);
     }
 }

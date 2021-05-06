@@ -8,6 +8,7 @@ import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONObject;
 
 import java.net.URI;
+import java.nio.ByteBuffer;
 
 import uniud.iot.lab.dataProvider.VideoProvider;
 
@@ -54,6 +55,15 @@ public class ConcreteVideoFluxListener implements VideoFluxListener {
                 if(!thisFluxListener.initDone) {
                     thisFluxListener.handleInitMessage(message);
                 } else {
+                    //thisFluxListener.handleVideoFrame(message);
+                }
+            }
+
+            @Override
+            public void onMessage(ByteBuffer message) {
+                if(!thisFluxListener.initDone) {
+                    // thisFluxListener.handleInitMessage(message);
+                } else {
                     thisFluxListener.handleVideoFrame(message);
                 }
             }
@@ -61,11 +71,13 @@ public class ConcreteVideoFluxListener implements VideoFluxListener {
             @Override
             public void onClose(int code, String reason, boolean remote) {
                 thisFluxListener.isRunning = false;
+                Log.w("VIDEO_CLOSE", reason);
+                Log.w("VIDEO_CLOSE", Boolean.toString(remote));
             }
 
             @Override
             public void onError(Exception ex) {
-
+                Log.e("VIDEO_EXCEPTION", ex.getMessage());
             }
         };
 
@@ -101,7 +113,7 @@ public class ConcreteVideoFluxListener implements VideoFluxListener {
             JSONObject obj = new JSONObject(message);
 
             width = obj.getInt("width");
-            height = obj.getInt("height");
+            height = obj.getInt("heigth");
             format = obj.getString("format");
 
         } catch (Throwable tx) {
@@ -126,10 +138,10 @@ public class ConcreteVideoFluxListener implements VideoFluxListener {
      *
      * @param message the video frame as (bytes) string (as received from web socket)
      */
-    private void handleVideoFrame(String message) {
+    private void handleVideoFrame(ByteBuffer message) {
 
         // extract image's raw bytes
-        byte[] rawBytesFrame = message.getBytes();
+        byte[] rawBytesFrame = message.array();
 
         // convert it as Bitmap
         Bitmap frame = bitmapConverter.getBitmapImage(rawBytesFrame);

@@ -46,17 +46,16 @@ public class DistanceUpdater extends Thread implements Updater {
         return this.isRunning;
     }
 
-
-
     public void run(){
         while (this.isRunning) {
 
-            this.requester.request();
             try {
-                TimeUnit.MILLISECONDS.sleep(100);
+                TimeUnit.MILLISECONDS.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
+            this.requester.request();
 
             /*
             Map<String,Float> response = null;

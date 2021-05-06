@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     // params of the graphical distance display
     int nCells = 6;
     Float minDistance = 0f;
-    Float maxDistance = 400f;
+    Float maxDistance = 200f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         // run various update processes
 
         // run the distance updater
+
         try {
             distancesUpdater.startUpdate();
             videoUpdater.startUpdate();

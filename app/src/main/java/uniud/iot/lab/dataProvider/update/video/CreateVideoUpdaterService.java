@@ -20,10 +20,11 @@ public class CreateVideoUpdaterService implements CreateUpdaterService {
     @Override
     public Updater createUpdater(SensorsDataProvider dataProvider) {
 
-        URI uri = URI.create("ws://192.168.1.135:5000/");
+        URI uri = URI.create("ws://192.168.4.1:5000");
 
         VideoFluxListener fluxListener =
-                new FakeVideoFluxListener((VideoProvider) dataProvider, context, uri);
+                // new FakeVideoFluxListener((VideoProvider) dataProvider, context, uri);
+                new ConcreteVideoFluxListener((VideoProvider) dataProvider, uri);
 
         return new VideoUpdater(fluxListener);
     }
